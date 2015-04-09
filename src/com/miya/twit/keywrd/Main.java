@@ -5,6 +5,8 @@ import com.miya.twit.utils.DataInitializer;
 import com.mongodb.DBCollection;
 import java.io.IOException;
 import java.util.ArrayList;
+import twitter4j.*;
+import twitter4j.Twitter;
 import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
 import twitter4j.conf.ConfigurationBuilder;
@@ -30,8 +32,10 @@ public class Main {
         cb.setDebugEnabled(true);
         cb.setIncludeEntitiesEnabled(true);
         cb.setIncludeRTsEnabled(true);
-        cb.setJSONStoreEnabled(true);
 
+        cb.setJSONStoreEnabled(true);
+        cb.setUseSSL(false); 
+        System.setProperty("twitter4j.http.useSSL","false");
         myStream = new TwitterStreamFactory(cb.build()).getInstance();
         TurkishMorphParser morphParser = TurkishMorphParser.createWithDefaults();
         Z3MarkovModelDisambiguator disambiguator = new Z3MarkovModelDisambiguator();

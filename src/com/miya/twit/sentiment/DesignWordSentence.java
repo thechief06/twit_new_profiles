@@ -11,7 +11,7 @@ import com.miya.twit.utils.Utilities;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import twitter4j.Tweet;
+//import twitter4j.Tweet
 import zemberek.morphology.apps.TurkishSentenceParser;
 
 /**
@@ -56,7 +56,7 @@ public class DesignWordSentence {
         sentenceEntity.setTopMention(topMention);
         sentenceEntity.setTopUrl(topUrl);
         sentenceEntity.setListParsedWords(listParsedWord);
-        sentenceEntity.setSentenceList(fillSentence(listParsedWord));
+     //  sentenceEntity.setSentenceList(fillSentence(listParsedWord));
 
         return sentenceEntity;
     }
@@ -88,11 +88,11 @@ public class DesignWordSentence {
         for (int i = 0; i < listParsedWord.size(); i++) {
             word = designPunctuationOfWord(listParsedWord.get(i).getWord());
 
-            if (word) {
-                listParsedWord.get(i).setWord(word);
-            }
+            listParsedWord.get(i).setWord(word);
+
             sentence += word + " ";
         }
+
         return sentence.trim();
     }
 

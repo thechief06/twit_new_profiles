@@ -36,6 +36,7 @@ public class StreamJob {
             System.out.println("subject length :" + subject.length + " subject : " + subject);
             fq.track(subject);
             myStream.filter(fq);
+            
             System.out.println("stream job start edildi");
         } catch (Exception ex) {
             System.out.println("Twitter statJob Hata : " + ex.getMessage());
@@ -137,6 +138,16 @@ public class StreamJob {
         public void onException(Exception excptn) {
             excptn.printStackTrace();
             myStream.shutdown();
+        }
+//
+//        @Override
+//        public void onStallWarning(StallWarning sw) {
+//            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        }
+
+        @Override
+        public void onStallWarning(StallWarning sw) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
 

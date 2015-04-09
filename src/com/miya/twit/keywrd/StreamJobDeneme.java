@@ -132,6 +132,11 @@ public class StreamJobDeneme {
         public void onException(Exception excptn) {
             excptn.printStackTrace();
         }
+
+        @Override
+        public void onStallWarning(StallWarning sw) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
     }
 
     class BaglantiListener implements ConnectionLifeCycleListener {
