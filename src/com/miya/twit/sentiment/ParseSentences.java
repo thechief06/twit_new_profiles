@@ -111,10 +111,7 @@ public class ParseSentences {
             System.out.println("ParseSentence Hatası : " + ex.getMessage() + " -- " + ex.fillInStackTrace() + " -- " + ex.fillInStackTrace().getMessage());
             return null;
         }
-
-    }
-
-    
+    }    
 
     public SubSentencesEntity parseSubSentence(List<ParsedWords> listParsedWord, String subSentence) throws IOException {
         ParseTwoWords PTW = new ParseTwoWords(sentenceParser);

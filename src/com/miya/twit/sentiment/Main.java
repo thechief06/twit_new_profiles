@@ -47,7 +47,7 @@ public class Main {
                 disambiguator
         );
 
-        File fileDir = new File("C:\\Users\\SBT\\Desktop\\twitler.txt");
+        File fileDir = new File("D:\\Gokhan\\Projeler\\Tweets.txt");
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileDir), "ISO-8859-9"));
         String line;
         DataInitializer dIni = new DataInitializer();

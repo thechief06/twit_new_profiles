@@ -52,20 +52,20 @@ public class ParseTweets {
     public TweetSentimentEntity decompositionTweet(String tweet) throws IOException {
         //tweet cümle pars'ı
         DesignWordSentence design = new DesignWordSentence();
-        System.out.println("-------------------------------------------");
-       // SentenceBoundaryDetector detector = new SimpleSentenceBoundaryDetector();
-        //  detector.getSentences(tweet);  //zemberek'in cümle pars 'ı yanlış çalışıyor.   
+        System.out.println("---Tweet Pars Edilmeye Başladı---(decompositionTweet)");
+        
+        TweetSentimentEntity TE = new TweetSentimentEntity();
+        TE.setTweet(tweet);
+
+        SentenceBoundaryDetector detector = new SimpleSentenceBoundaryDetector();
+        List<String> sentences = detector.getSentences(tweet);  //zemberek'in cümle pars 'ı stop words'lerde yanlış :) karakteri gibi   
 
         SentenceEntity sentenceEntity = design.designPunctuationOfTweet(tweet, sentenceParser);
-        List<String> sentences= new ArrayList<String>();
-      
+
         List<SubSentencesEntity> listSubSentences = new ArrayList<SubSentencesEntity>();
         ParseSentences PS = new ParseSentences(sentenceParser, listExpression);
 
-        TweetSentimentEntity TE = new TweetSentimentEntity();
-        TE.setTweet(tweet);
         for (String sentence : sentences) {
-
             SubSentencesEntity SSE = PS.decompositionSentence(sentence);
             if (SSE != null) {
                 TE.setTweetPolarityValue(SSE.getSentencePolarity() + TE.getTweetPolarityValue());
@@ -79,13 +79,13 @@ public class ParseTweets {
         TE.setTopUrl(sentenceEntity.getTopUrl());
         return TE;
     }
+
     // ponctiaction(noktalama) ile parsedword karşılaştırılıp sentence haline getirilip return edilecek
-    public List<String> seperationSentences(SentenceEntity sentenceEntity){
-        for(int i=0;i<Utilities.sentenceSeperator.length;i++){
-           
+    public List<String> seperationSentences(SentenceEntity sentenceEntity) {
+        for (int i = 0; i < Utilities.sentenceSeperator.length; i++) {
+
         }
-        
-        
+
         return null;
     }
 

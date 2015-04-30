@@ -44,7 +44,7 @@ public class InsertWordMongoDBToFile {
                 morphParser,
                 disambiguator
         );
-        new InsertWordMongoDBToFile(sentenceParser).writeMongoDB("katliam");
+        new InsertWordMongoDBToFile(sentenceParser).writeMongoDB("");
         // DBConnectSentiment.getWordWithKeyWord(" dd", 1);
     }
 
@@ -52,7 +52,7 @@ public class InsertWordMongoDBToFile {
 
         List<TweetDBEntity> list = new ArrayList<TweetDBEntity>();
         if (word.isEmpty()) {
-            String filePath = "E:/sentiment/TR/negatifKokEk.txt";
+            String filePath = "D:/Gokhan/Projeler/SosyalDuygu/sentiment/TR/VeryNegativeKok.txt";
             File fileDir = new File(filePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileDir), "ISO-8859-9")); //ISO-8859-9
             String line;
@@ -61,16 +61,15 @@ public class InsertWordMongoDBToFile {
                 TDB = new TweetDBEntity();
                 TDB.setRootType(WordType.getWordTypeValue(WordType.Noun));
                 TDB.setRootType(MorphParseWithPos(line));
-                TDB.setPolarity(-2);
+                TDB.setPolarity(-3);
                 TDB.setText(line);
                 list.add(TDB);
-
             }
         } else {
             TweetDBEntity TDB = new TweetDBEntity();
             TDB.setRootType(WordType.getWordTypeValue(WordType.Verb));
             TDB.setRootType(MorphParseWithPos(word));
-            TDB.setPolarity(-2);
+            TDB.setPolarity(-3);
             TDB.setText(word);
             list.add(TDB);
         }

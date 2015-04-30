@@ -10,6 +10,7 @@ import com.miya.twit.pajo.SentenceEntity;
 import com.miya.twit.utils.Utilities;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 //import twitter4j.Tweet
 import zemberek.morphology.apps.TurkishSentenceParser;
@@ -24,7 +25,7 @@ public class DesignWordSentence {
         SentenceEntity sentenceEntity = new SentenceEntity();
 
         tweet = tweet.toLowerCase().trim();
-        String[] arrToken = tweet.split(" ");
+        String[] arrToken = tweet.split("[!.?:;, ]");
         List<ParsedWords> listParsedWord = new ArrayList<ParsedWords>();
         ParsedWords pW = null;
         ParseTwoWords PTW = new ParseTwoWords(sentenceParser);
@@ -33,8 +34,13 @@ public class DesignWordSentence {
         List<String> topUrl = new ArrayList<String>();
 
         // tweet hashtag, mention ve url parse
+//        ZemberekLexer lexer = new ZemberekLexer();
+//        Iterator<Token> tokenIterator = lexer.getTokenIterator(tweet);
         for (int i = 0; i < arrToken.length; i++) { //while (tokenIterator.hasNext()) {
             // Token token = tokenIterator.next();
+            if(arrToken[i].trim()==""){
+                continue;
+            }
             if (arrToken[i].charAt(0) == '#') {
                 topHashTag.add(arrToken[i]);
             } else if (arrToken[i].charAt(0) == '@') {
@@ -56,7 +62,7 @@ public class DesignWordSentence {
         sentenceEntity.setTopMention(topMention);
         sentenceEntity.setTopUrl(topUrl);
         sentenceEntity.setListParsedWords(listParsedWord);
-     //  sentenceEntity.setSentenceList(fillSentence(listParsedWord));
+       // sentenceEntity.setSentenceList(fillSentence(listParsedWord));
 
         return sentenceEntity;
     }
@@ -87,9 +93,7 @@ public class DesignWordSentence {
 
         for (int i = 0; i < listParsedWord.size(); i++) {
             word = designPunctuationOfWord(listParsedWord.get(i).getWord());
-
             listParsedWord.get(i).setWord(word);
-
             sentence += word + " ";
         }
 

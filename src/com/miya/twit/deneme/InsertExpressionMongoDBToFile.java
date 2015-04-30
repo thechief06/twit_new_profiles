@@ -43,7 +43,7 @@ public class InsertExpressionMongoDBToFile {
     }
 
     public void writeMongoDB() throws FileNotFoundException, IOException {
-        String filePath = "E:\\sentiment\\TR\\deyimlerAtasözleri\\pozitifDeyimlerAtasözleri.txt";
+        String filePath = "D:\\Gokhan\\Projeler\\SosyalDuygu\\sentiment\\TR\\deyimlerAtasözleri\\negatifDeyimlerAtasözleri.txt";
         File fileDir = new File(filePath);
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileDir), "ISO-8859-9")); //ISO-8859-9
         String line;
@@ -52,7 +52,7 @@ public class InsertExpressionMongoDBToFile {
         while ((line = br.readLine()) != null) {
             exp = new Expressions();
             exp.setExpression(line.toLowerCase());
-            exp.setPolarity(Polarity.Positive);
+            exp.setPolarity(Polarity.Negative);
             list.add(exp);
         }
 

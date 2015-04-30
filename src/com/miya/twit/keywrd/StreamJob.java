@@ -9,7 +9,7 @@ import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 
 public class StreamJob {
-
+    
     private TwitterStream myStream;
     private long[] userIds = {188407220};
     private TivitListener myTivitListener;
@@ -19,11 +19,11 @@ public class StreamJob {
     public StreamJob(String userId, TwitterStream myStream) {
         //this.userIds = userIds;
         this.myStream = myStream;
-
+        
     }
     List<TwitProfileWrapper> listTweetProfileWrapper = null;
     List<Integer> userIdList = new ArrayList<Integer>();
-
+    
     public void startJob(String[] subject) {
         try {
             System.out.println("stream job start başladı");
@@ -42,11 +42,11 @@ public class StreamJob {
             System.out.println("Twitter statJob Hata : " + ex.getMessage());
         }
     }
-
+    
     public void stopJob() {
         myStream.cleanUp();
     }
-
+    
     public List<TwitProfileWrapper> getLast10OfList() {
         List<TwitProfileWrapper> newList = null;
         if (listTweetProfileWrapper != null && listTweetProfileWrapper.size() >= 10) {
@@ -57,7 +57,7 @@ public class StreamJob {
             return null;
         }
     }
-
+    
     public List<TwitProfileWrapper> getLastSmallList() {
         if (listTweetProfileWrapper != null && listTweetProfileWrapper.size() < 10) {
             return listTweetProfileWrapper;
@@ -65,23 +65,23 @@ public class StreamJob {
             return null;
         }
     }
-
+    
     public List<TwitProfileWrapper> getList() {
         return listTweetProfileWrapper;
     }
-
+    
     public void setList(List<TwitProfileWrapper> listTweetProfileWrapper) {
         this.listTweetProfileWrapper = listTweetProfileWrapper;
     }
-
+    
     public void clearList() {
         listTweetProfileWrapper.clear();
     }
-
+    
     class TivitListener implements StatusListener {
-
+        
         List<TwitProfileWrapper> list = new ArrayList<TwitProfileWrapper>();
-
+        
         @Override
         public void onStatus(Status status) {
             TwitProfileWrapper tp = null;
@@ -90,7 +90,7 @@ public class StreamJob {
                     if (list.size() < Utilities.totalTweetOfSession) {
                         if (status.getText() != null && !status.getText().equals("")) {
                             tp = new TwitProfileWrapper();
-
+                            
                             tp.setUserId(status.getUser().getId());
                             tp.setUsername(status.getUser().getName());
                             tp.setScreenName(status.getUser().getScreenName());
@@ -100,7 +100,11 @@ public class StreamJob {
                             tp.setUserLanguage(status.getUser().getLang());
                             tp.setUserProfileImageUrl(status.getUser().getProfileImageURL().toString());
                             tp.setTextCreatedDate(status.getCreatedAt());
+                            tp.setUrlEntities(status.getURLEntities());
+                            tp.setUserMentionEntities(status.getUserMentionEntities());
+                            tp.setHashTagEntities(status.getHashtagEntities());
                             tp.setText(status.getText());
+                            
                             list.add(tp);
                             if (list.size() % 10 == 0) {
                                 setList(list);
@@ -118,52 +122,47 @@ public class StreamJob {
                 stopJob();
             }
         }
-
+        
         @Override
         public void onDeletionNotice(StatusDeletionNotice sdn) {
             System.out.println("delete:" + sdn.toString());
         }
-
+        
         @Override
         public void onTrackLimitationNotice(int i) {
             System.out.println("dddf:" + i);
         }
-
+        
         @Override
         public void onScrubGeo(long l, long l1) {
             System.out.println("lll ::" + l + " , l1 :" + l1);
         }
-
+        
         @Override
         public void onException(Exception excptn) {
             excptn.printStackTrace();
             myStream.shutdown();
         }
-//
-//        @Override
-//        public void onStallWarning(StallWarning sw) {
-//            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//        }
 
         @Override
         public void onStallWarning(StallWarning sw) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
-
+    
     class BaglantiListener implements ConnectionLifeCycleListener {
-
+        
         @Override
         public void onConnect() {
             System.out.println("Baglandi");
         }
-
+        
         @Override
         public void onDisconnect() {
             System.out.println("kapandi");
             myStream.shutdown();
         }
-
+        
         @Override
         public void onCleanUp() {
             System.out.println("Clean");
